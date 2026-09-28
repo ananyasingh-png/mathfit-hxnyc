@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>MathFit™ Challenge at Westchester Huaxia</title>
-<meta name="description" content="A free, hands-on family math event for grades K to 5. Sunday, October 4, Westchester Community College, Valhalla NY.">
+<meta name="description" content="A free, hands-on family math event for grades K to 5. Sunday, October 18, during the Westchester Huaxia All Parents Conference, Westchester Community College, Valhalla NY.">
 <meta property="og:title" content="MathFit™ Challenge at Westchester Huaxia">
 <meta property="og:description" content="Discover how your child thinks about math. A free, hands-on family math event for grades K to 5.">
 <meta property="og:image" content="images/takehome.jpg">
@@ -59,6 +59,7 @@
   .card .hd { padding: 10px 18px; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--chip); }
   .card .bd { padding: 18px; }
   .card p { margin: 0 0 14px; }
+  .card p.note { font-size: 13px; color: var(--muted); margin-top: -6px; }
   .seats { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; background: var(--chip); padding: 4px 11px; border-radius: 99px; margin-bottom: 14px; }
   .seats[hidden] { display: none; }
   .seats i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); display: inline-block; }
@@ -137,11 +138,11 @@
       <div class="meta">
         <div class="row">
           <div class="tile"><div class="m" id="tileM"></div><div class="d" id="tileD"></div></div>
-          <div><b id="dateText"></b><span id="timeText"></span></div>
+          <div><b id="dateText"></b><span id="timeText"></span><span id="timeNote" style="display:block"></span></div>
         </div>
         <div class="row">
           <div class="pin" aria-hidden="true">📍</div>
-          <div><b id="venue"></b><span id="address"></span></div>
+          <div><b id="venue"></b><span id="address"></span><span style="display:block" data-i18n="during"></span></div>
         </div>
       </div>
 
@@ -150,6 +151,7 @@
         <div class="bd">
           <div class="seats" id="seats" hidden><i></i><span id="seatsText"></span></div>
           <p data-i18n="welcome"></p>
+          <p class="note" data-i18n="dateNote"></p>
           <button class="btn primary" id="openReg" type="button" data-i18n="registerBtn"></button>
           <div class="btns">
             <a class="btn ghost" id="gcal" href="#" target="_blank" rel="noopener" data-i18n="addCal"></a>
@@ -262,9 +264,10 @@
 <script>
 /* ================= EDIT FOR EACH EVENT ================= */
 const EVENT = {
-  date: '2026-10-04',                 // YYYY-MM-DD
-  startTime: '',                      // e.g. '10:00' once confirmed; '' shows "Time to be confirmed"
-  endTime: '',                        // e.g. '11:30'
+  date: '2026-10-18',                 // YYYY-MM-DD
+  startTime: '11:00',                 // window given by Stella; exact slot 11:00 to 12:00 or 11:30 to 12:30, TBC
+  endTime: '12:30',
+  timeNote: true,                     // true adds "exact time to be confirmed" under the time
   tzLabel: 'ET',
   tz: 'America/New_York',
   venue: 'Westchester Community College',
@@ -273,7 +276,7 @@ const EVENT = {
   REGISTER_URL: '',                   // the /exec link from registration_backend.gs
   evalLink: 'https://trial.cuemath.com/swipe-apollov1-us?utm_source=community&utm_medium=event&utm_campaign=hxnyc-mathfit',
   hosts: [
-    { name: 'Stella Zhang', email: 'stellayz@yahoo.com', color: '#9ad0c2' },
+    { name: 'Stella Zhang', email: 'stellayz@yahoo.com,huaxia.wcc@gmail.com', color: '#9ad0c2' },
     { name: 'Anchi Teng', email: 'anchi.teng@cuemath.com', color: '#f6c32f' },
     { name: 'Ananya Singh', email: 'ananya.singh@cuemath.com', color: '#f2a58e' }
   ],
@@ -291,6 +294,9 @@ const T = {
     addCal: 'Add to calendar', share: 'Share', copied: 'Link copied',
     hostedBy: 'Hosted by', going: n => n + (n === 1 ? ' family registered' : ' families registered'),
     seatsLeft: (l, c) => l + ' of ' + c + ' seats left', timeTbc: 'Time to be confirmed',
+    timeNoteTxt: 'Parents meet us 30 minutes before. Exact time to be confirmed.',
+    during: 'During the Westchester Huaxia All Parents Conference',
+    dateNote: 'The date may still change. If it does, we will email every registered family.',
     about: 'About Event',
     a1: 'Discover how your child thinks about math.',
     a2: 'A free, hands-on family math event for grades K to 5. 🧭',
@@ -350,6 +356,9 @@ const T = {
     addCal: '加入日历', share: '分享', copied: '链接已复制',
     hostedBy: '主持人', going: n => '已有 ' + n + ' 个家庭报名',
     seatsLeft: (l, c) => '剩余 ' + l + ' / ' + c + ' 个名额', timeTbc: '时间待定',
+    timeNoteTxt: '请家长提前 30 分钟与我们见面。具体时间待定。',
+    during: '威郡华夏中文学校全体家长会期间举行',
+    dateNote: '活动日期仍有可能调整。如有变动，我们会发邮件通知所有已报名的家庭。',
     about: '活动介绍',
     a1: '了解孩子是如何思考数学的。',
     a2: '一场免费、动手参与的亲子数学活动，适合幼儿园至五年级。🧭',
@@ -431,7 +440,7 @@ function renderHosts(el) {
   el.innerHTML = '';
   EVENT.hosts.forEach(h => {
     const a = document.createElement('a');
-    a.className = 'host'; a.href = 'mailto:' + h.email + '?subject=' + encodeURIComponent('MathFit Challenge, October 4');
+    a.className = 'host'; a.href = 'mailto:' + h.email + '?subject=' + encodeURIComponent('MathFit Challenge, October 18');
     const who = document.createElement('span'); who.className = 'who';
     const av = document.createElement('span'); av.className = 'av'; av.style.background = h.color;
     av.textContent = h.name.split(' ').map(w => w[0]).join('').slice(0, 2);
@@ -454,6 +463,7 @@ function render() {
   $('tileD').textContent = D;
   $('dateText').textContent = dateText();
   $('timeText').textContent = timeText();
+  $('timeNote').textContent = EVENT.timeNote ? t.timeNoteTxt : '';
   $('venue').textContent = $('venue2').textContent = EVENT.venue;
   $('address').textContent = $('address2').textContent = EVENT.address;
   $('evalLink').href = EVENT.evalLink;
