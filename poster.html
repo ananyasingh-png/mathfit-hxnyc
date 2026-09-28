@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MathFit™ Challenge poster · HXNYC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: letter; margin: 0; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #e9e5de; font-family: Inter, system-ui, sans-serif; color: #15141b; }
+  .sheet { width: 8.5in; height: 11in; margin: 24px auto; background: #fff; padding: 0.55in 0.6in; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,.12); }
+  @media print { body { background: #fff; } .sheet { margin: 0; box-shadow: none; } .noprint { display: none; } }
+  .logos { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 15px; }
+  .logos .c { width: 34px; height: 34px; border-radius: 8px; background: #f6c32f; display: grid; place-items: center; }
+  .logos img { width: 48px; height: 48px; }
+  .logos .x { color: #8a8690; font-weight: 500; }
+  .kicker { margin-top: 0.45in; font-size: 16px; font-weight: 700; letter-spacing: .12em; color: #de3426; text-transform: uppercase; }
+  h1 { font-size: 64px; line-height: 1.02; margin: 10px 0 14px; letter-spacing: -.03em; }
+  .sub { font-size: 22px; line-height: 1.4; margin: 0 0 0.3in; color: #3a3840; }
+  .photo { width: 100%; height: 2.9in; object-fit: cover; border-radius: 18px; }
+  .row { display: grid; grid-template-columns: 1fr 2.3in; gap: 0.35in; margin-top: 0.35in; align-items: center; }
+  .facts { font-size: 20px; line-height: 1.5; }
+  .facts b { display: block; font-size: 24px; }
+  .facts .i { margin-bottom: 14px; }
+  .qr { text-align: center; }
+  .qr img { width: 2.3in; height: 2.3in; image-rendering: pixelated; }
+  .qr div { font-weight: 800; font-size: 18px; margin-top: 6px; }
+  .qr small { display: block; font-size: 12px; color: #5f5c66; word-break: break-all; }
+  .foot { margin-top: auto; display: flex; justify-content: space-between; font-size: 14px; color: #5f5c66; border-top: 2px solid #15141b; padding-top: 12px; }
+  .noprint { text-align: center; margin: 12px; font-size: 14px; }
+</style>
+</head>
+<body>
+<p class="noprint">Print this page (Letter size) or save it as a PDF for the WeChat group. <button onclick="print()">Print</button></p>
+<div class="sheet">
+  <div class="logos"><span class="c">C</span>Cuemath <span class="x">×</span> <img src="images/hxnyc-logo.png" alt="HXNYC"> Huaxia New York Central Chinese School</div>
+  <div class="kicker">Free · Grades K to 5 · 50 seats</div>
+  <h1>MathFit™ Challenge</h1>
+  <p class="sub">Discover how your child thinks about math. Four hands-on challenges, and every child takes home their own MathFit™ personality card.</p>
+  <img class="photo" src="images/takehome.jpg" alt="">
+  <div class="row">
+    <div class="facts">
+      <div class="i"><b>Sunday, October 18, 2026</b>Around 11:00 AM to 12:30 PM ET, exact time to be confirmed</div>
+      <div class="i"><b>Westchester Community College</b>75 Grasslands Road, Valhalla, NY 10595 · during the HXNYC All Parents Conference</div>
+      <div class="i"><b>Free, registration required</b>No test, no scores called out, nothing to buy</div>
+    </div>
+    <div class="qr"><img src="images/qr-register.png" alt="QR code to register"><div>Scan to register</div><small>ananyasingh-png.github.io/mathfit-hxnyc</small></div>
+  </div>
+  <div class="foot"><span>Questions: ananya.singh@cuemath.com · anchi.teng@cuemath.com</span><span>www.cuemath.com</span></div>
+</div>
+</body>
+</html>
