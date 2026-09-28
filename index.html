@@ -6,7 +6,7 @@
 <title>MathFit™ Challenge at HXNYC</title>
 <meta name="description" content="A free, hands-on family math event for grades K to 5. Sunday, October 18, with Huaxia New York Central Chinese School, Westchester Community College, Valhalla NY.">
 <meta property="og:title" content="MathFit™ Challenge at HXNYC · Sunday, October 18">
-<meta property="og:description" content="Discover how your child thinks about math. Free for grades K to 5. 50 seats.">
+<meta property="og:description" content="Discover how your child thinks about math. Free for grades K to 5.">
 <meta property="og:image" content="https://ananyasingh-png.github.io/mathfit-hxnyc/images/takehome.jpg">
 <link rel="icon" href="images/hxnyc-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +69,8 @@
   .card .bd { padding: 18px; }
   .card p { margin: 0 0 14px; }
   .card p.note { font-size: 13px; color: var(--muted); }
-  .meter { margin-bottom: 14px; }
+  .meter { margin-bottom: 14px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; background: var(--chip); padding: 5px 12px; border-radius: 99px; }
+  .meter .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
   .meter[hidden] { display: none; }
   .meter .t { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
   .meter .t span:last-child { color: var(--muted); font-weight: 500; }
@@ -88,8 +89,8 @@
   .img { width: 100%; border-radius: 14px; display: block; margin: 14px 0; }
   ul.take { padding-left: 20px; margin: 0; } ul.take li { margin: 6px 0; }
   .steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
-  .steps li { display: grid; grid-template-columns: 76px 1fr; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
-  .steps .when { font-weight: 800; font-size: 14px; color: var(--ink); }
+  .steps li { display: grid; grid-template-columns: 32px 1fr; gap: 12px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; }
+  .steps .num { width: 28px; height: 28px; border-radius: 50%; background: var(--yellow); color: #15141b; font-weight: 800; font-size: 14px; display: grid; place-items: center; }
   .steps b { display: block; }
   .steps span { color: var(--muted); font-size: 14px; }
   .seg { display: inline-flex; background: var(--chip); padding: 4px; border-radius: 12px; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
@@ -223,10 +224,7 @@
       <div class="card" id="regCard">
         <div class="hd"><span data-i18n="registration"></span><span class="cd" id="countdown"></span></div>
         <div class="bd">
-          <div class="meter" id="meter" hidden>
-            <div class="t"><span id="meterText"></span><span id="meterLeft"></span></div>
-            <div class="track"><div class="fill" id="meterFill"></div></div>
-          </div>
+          <div class="meter" id="meter" hidden><span class="dot"></span><span id="meterText"></span></div>
           <p data-i18n="welcome"></p>
           <button class="btn primary" id="openReg" type="button" data-i18n="registerBtn"></button>
           <div class="btns">
@@ -248,6 +246,15 @@
       </div>
 
 
+      <section>
+        <h2 data-i18n="howTitle"></h2>
+        <ol class="steps">
+          <li><div class="num">1</div><div><b data-i18n="st1"></b><span data-i18n="st1d"></span></div></li>
+          <li><div class="num">2</div><div><b data-i18n="st2"></b><span data-i18n="st2d"></span></div></li>
+          <li><div class="num">3</div><div><b data-i18n="st3"></b><span data-i18n="st3d"></span></div></li>
+          <li><div class="num">4</div><div><b data-i18n="st4"></b><span data-i18n="st4d"></span></div></li>
+        </ol>
+      </section>
       <section class="body">
         <h2 data-i18n="about"></h2>
         <p class="lead" data-i18n="a1"></p>
@@ -380,7 +387,7 @@ const EVENT = {
   tz: 'America/New_York',
   venue: 'Westchester Community College',
   address: '75 Grasslands Road, Valhalla, NY 10595',
-  capacity: 50,
+  capacity: 0,                        // 0 = no limit on registrations
   REGISTER_URL: '',                   // the /exec link from registration_backend.gs
   pageUrl: 'https://ananyasingh-png.github.io/mathfit-hxnyc/',
   evalLink: 'https://trial.cuemath.com/swipe-apollov1-us?utm_source=community&utm_medium=event&utm_campaign=hxnyc-mathfit',
@@ -401,14 +408,14 @@ const T = {
     during: 'During the HXNYC All Parents Conference',
     timeNoteTxt: 'Exact time to be confirmed.',
     registration: 'Registration', countdown: n => n > 1 ? n + ' days to go' : (n === 1 ? 'Tomorrow' : (n === 0 ? 'Today' : '')),
-    welcome: 'Free for grades K to 5. Save your child’s seat in under a minute. Registration closes when all 50 seats are taken.',
+    welcome: 'Free for grades K to 5. Register your child in under a minute.',
     dateNote: 'The date may still change. If it does, we will email every registered family.',
-    registerBtn: 'Register for free', registerShort: 'Register free', full: 'All seats are taken', soon: 'Registration opens soon',
+    registerBtn: 'Register here', registerShort: 'Register here', full: 'Registration is closed', soon: 'Registration opens soon',
     addCal: 'Add to calendar', invite: 'Invite a family', copied: 'Invite message copied. Paste it in WeChat or WhatsApp.',
-    inviteMsg: url => 'Free MathFit™ Challenge for kids in grades K to 5 at HXNYC on Sunday, October 18. Four hands-on math challenges, and every child takes home their own MathFit™ personality card. 50 seats only: ' + url,
+    inviteMsg: url => 'Free MathFit™ Challenge for kids in grades K to 5 at HXNYC on Sunday, October 18. Four hands-on math challenges, and every child takes home their own MathFit™ personality card. Register here: ' + url,
     hostedBy: 'Hosted by', mailWord: 'Email',
-    seatsTaken: (t, c) => t + ' of ' + c + ' seats taken', seatsLeft: l => l + ' left',
-    stickySeats: l => l === null ? 'Free · grades K to 5' : 'Free · ' + l + ' seats left',
+    famCount: n => n + (n === 1 ? ' family has registered' : ' families have registered'),
+    stickySeats: 'Free · grades K to 5',
     timeTbc: 'Time to be confirmed',
     howTitle: 'How it works on the day',
     st1: 'Meet our team', st1d: 'Parents meet us before the start. Your child gets a MathFit™ Compass and a tote.',
@@ -427,7 +434,7 @@ const T = {
     hTry: '🧠 Try a puzzle together',
     tryIntro: 'Three real Logic Legend puzzles, one for each grade band. Try one with your child right now.',
     qOf: (i, n) => 'Puzzle ' + i + ' of ' + n, next: 'Next puzzle', again: 'Start again', correct: 'Yes! ', tryAgain: 'Not quite. Have another look.',
-    quizEnd: 'Your child can take on four puzzles like these, plus three more challenges, on October 18.', quizCta: 'Save a seat',
+    quizEnd: 'Your child can take on four puzzles like these, plus three more challenges, on October 18.', quizCta: 'Register now',
     hReveal: '🧭 The reveal: your child’s MathFit™ personality',
     reveal: 'Every finished challenge earns a stamp on the Compass. Once it is full, scan the QR on it, and at the final station your child is handed their MathFit™ personality: one of six, on a collectible card that is theirs to keep. Every child gets one, and every one is a strength.',
     flipHint: 'Tap a card to see what it means. The card each child gets is decided on the day by their stamps.',
@@ -439,7 +446,7 @@ const T = {
     t4: 'A free month of the Cuemath app to keep exploring at home',
     t5: 'Refreshments',
     hGood: '📌 Good to know',
-    g1: 'Free entry, registration required. Each event has 50 seats only.',
+    g1: 'Free entry, registration required.',
     g2: 'Grades K to 5. Parents meet our team 30 minutes before the start.',
     g3: 'About 90 minutes. Bring a phone to scan the Compass QR.',
     hFaq: '❓ Questions parents ask',
@@ -447,7 +454,7 @@ const T = {
       ['Is it a test?', 'No. There is no stage, no pressure and no scores called out. Every station climbs from easy to hard, and every child leaves with a personality card that describes a strength.'],
       ['Does it cost anything?', 'No. Entry is free and there is nothing to buy.'],
       ['My child is shy, or still learning English. Will that be a problem?', 'Every activity checks itself and runs at your child’s own pace, so there is no spotlight. The materials are in English. You can write to our host Anchi in Mandarin with any question before the day.'],
-      ['Can I bring more than one child?', 'Yes. Each child in grades K to 5 needs a seat, so add them in the form. Older brothers and sisters can book the free one-on-one evaluation below.'],
+      ['Can I bring more than one child?', 'Yes. Add each child in grades K to 5 in the form. Older brothers and sisters can book the free one-on-one evaluation below.'],
       ['Do I need to stay the whole time?', 'Parents meet our team 30 minutes before the start. The school is confirming the plan for the rest of the hour, and we will email every registered family once it is set.'],
       ['Will there be photos?', 'Only with your consent, which you give in the registration form.'],
       ['What if the date changes?', 'We will email every registered family straight away with the new date.']
@@ -458,16 +465,16 @@ const T = {
     location: 'Location',
     footer: 'The MathFit™ Challenge is hosted by Cuemath, in partnership with Huaxia New York Central Chinese School.',
     coverAlt: 'Children at a MathFit Challenge station holding their finished fraction pizzas',
-    formTitle: 'Save your child’s seat', step: (i, n) => 'Step ' + i + ' of ' + n,
+    formTitle: 'Register your child', step: (i, n) => 'Step ' + i + ' of ' + n,
     fParent: 'Parent or guardian name', fEmail: 'Email', fPhone: 'Phone', optional: '(optional)',
     fChild: 'Student’s Name', fGrade: 'Student’s Grade', choose: 'Choose',
-    fKids: 'How many children are coming? Each child needs a seat.',
+    fKids: 'How many children are coming?',
     fOthers: 'Names and grades of the other children',
     fPrefLang: 'Preferred language for event updates',
     fTerms: 'I agree to the', termsLink: 'Terms and Conditions',
     fConsent: 'Yes, I consent to Cuemath recording the event, clicking pictures, video recording of my child for quality, training, safety, support, and service improvement, as per the Privacy Policy.',
-    submit: 'Save my seat', sending: 'Saving your seat…',
-    saved: c => 'Seat saved for ' + c + '.',
+    submit: 'Register', sending: 'Registering…',
+    saved: c => c + ' is registered.',
     step2Intro: 'Three quick optional questions help us plan the day. You can skip them.',
     fCurrent: 'Are you a current Cuemath student?', yes: 'Yes', no: 'No',
     fSource: 'How did you hear about this event?',
@@ -477,10 +484,11 @@ const T = {
     skip: 'Skip', save2: 'Finish',
     errRequired: 'Please fill in the required fields and tick both boxes.',
     errEmail: 'Please check the email address.',
-    errFull: 'Sorry, there are not enough seats left for that many children.',
+    errFull: 'Sorry, registration is closed.',
+    notLive: 'Registration is not open yet, so this was not saved. Please check back soon, or email one of the hosts.',
     errNet: 'We could not save your registration. Please try again, or email one of the hosts.',
     doneTitle: 'You’re registered!',
-    doneText: (c, d) => 'Your seat is saved for ' + c + ' on ' + d + '. A confirmation is on its way to your email. Invite another family so your child has a friend there.',
+    doneText: (c, d) => c + ' is registered for ' + d + '. A confirmation is on its way to your email. Invite another family so your child has a friend there.',
     bands: {
       k1: [['f', 'Fluency · Number Ninja', 'Adding and subtracting within 20', 'Solve each square, find the matching sticker and watch a hidden rocket appear.'],
            ['u', 'Understanding · Why Wizard', 'Six picture clues', 'Each answer is a word, and all six answers spell WIZARD down the middle.'],
@@ -518,14 +526,14 @@ const T = {
     during: '华夏纽约中心中文学校全体家长会期间举行',
     timeNoteTxt: '具体时间待定。',
     registration: '报名', countdown: n => n > 1 ? '还有 ' + n + ' 天' : (n === 1 ? '明天' : (n === 0 ? '今天' : '')),
-    welcome: '幼儿园至五年级免费参加。一分钟即可为孩子预留名额。50 个名额报满即截止。',
+    welcome: '幼儿园至五年级免费参加。一分钟即可为孩子完成报名。',
     dateNote: '活动日期仍有可能调整。如有变动，我们会发邮件通知所有已报名的家庭。',
-    registerBtn: '免费报名', registerShort: '免费报名', full: '名额已满', soon: '报名即将开放',
+    registerBtn: '点击报名', registerShort: '点击报名', full: '报名已截止', soon: '报名即将开放',
     addCal: '加入日历', invite: '邀请其他家庭', copied: '邀请信息已复制，可粘贴到微信或 WhatsApp。',
-    inviteMsg: url => '10 月 18 日（周日）华夏纽约中心中文学校免费 MathFit™ 数学挑战赛，适合幼儿园至五年级。四项动手数学挑战，每个孩子都能带回自己的 MathFit™ 数学性格卡。仅限 50 个名额：' + url,
+    inviteMsg: url => '10 月 18 日（周日）华夏纽约中心中文学校免费 MathFit™ 数学挑战赛，适合幼儿园至五年级。四项动手数学挑战，每个孩子都能带回自己的 MathFit™ 数学性格卡。报名链接：' + url,
     hostedBy: '主持人', mailWord: '邮件',
-    seatsTaken: (t, c) => '已报名 ' + t + ' / ' + c, seatsLeft: l => '剩余 ' + l + ' 个',
-    stickySeats: l => l === null ? '免费 · 幼儿园至五年级' : '免费 · 剩余 ' + l + ' 个名额',
+    famCount: n => '已有 ' + n + ' 个家庭报名',
+    stickySeats: '免费 · 幼儿园至五年级',
     timeTbc: '时间待定',
     howTitle: '活动当天流程',
     st1: '与我们见面', st1d: '家长在活动开始前与我们见面。孩子领取 MathFit™ 指南针和手提袋。',
@@ -544,7 +552,7 @@ const T = {
     hTry: '🧠 和孩子一起试一题',
     tryIntro: '三道真实的 Logic Legend 推理题，每个年级段一道。现在就和孩子试试吧。',
     qOf: (i, n) => '第 ' + i + ' 题，共 ' + n + ' 题', next: '下一题', again: '重新开始', correct: '答对了！', tryAgain: '差一点，再看看。',
-    quizEnd: '10 月 18 日，孩子可以挑战四道这样的题，以及另外三项挑战。', quizCta: '预留名额',
+    quizEnd: '10 月 18 日，孩子可以挑战四道这样的题，以及另外三项挑战。', quizCta: '立即报名',
     hReveal: '🧭 揭晓：孩子的 MathFit™ 数学性格',
     reveal: '每完成一项挑战，就能在指南针上盖一个章。盖满之后扫描上面的二维码，孩子会在最后一站领取自己的 MathFit™ 数学性格：六种之一，印在一张可以收藏的卡片上。每个孩子都会拿到一张，而每一种都是一种优势。',
     flipHint: '点击卡片查看含义。每个孩子拿到哪一张，由当天获得的印章决定。',
@@ -556,7 +564,7 @@ const T = {
     t4: '免费一个月的 Cuemath 应用，回家继续探索',
     t5: '茶点',
     hGood: '📌 温馨提示',
-    g1: '免费入场，需提前报名。每场活动仅限 50 个名额。',
+    g1: '免费入场，需提前报名。',
     g2: '适合幼儿园至五年级。请家长在活动开始前 30 分钟与我们见面。',
     g3: '约 90 分钟。请带手机扫描指南针上的二维码。',
     hFaq: '❓ 家长常见问题',
@@ -564,7 +572,7 @@ const T = {
       ['这是考试吗？', '不是。没有舞台，没有压力，也不会当众报分数。每项挑战从简单逐步变难，每个孩子都会带走一张描述自身优势的性格卡。'],
       ['需要付费吗？', '不需要。免费入场，也没有任何需要购买的东西。'],
       ['孩子比较害羞，或者英语还在学习中，会有问题吗？', '每项活动都能自我检查，按孩子自己的节奏进行，不会让孩子站到聚光灯下。活动材料是英文的。活动前如有任何问题，可以用中文写信给主持人 Anchi。'],
-      ['可以带不止一个孩子吗？', '可以。每个幼儿园至五年级的孩子各占一个名额，请在表格中填写。哥哥姐姐可以预约下方的免费一对一评估。'],
+      ['可以带不止一个孩子吗？', '可以。请在表格中填写每个幼儿园至五年级的孩子。哥哥姐姐可以预约下方的免费一对一评估。'],
       ['我需要全程陪同吗？', '请家长在活动开始前 30 分钟与我们见面。学校正在确认其余时间的安排，确定后我们会发邮件通知所有已报名的家庭。'],
       ['会拍照吗？', '只有在您同意的情况下才会拍照，您可以在报名表中选择。'],
       ['如果日期变了怎么办？', '我们会第一时间发邮件告诉所有已报名的家庭新的日期。']
@@ -575,16 +583,16 @@ const T = {
     location: '地点',
     footer: 'MathFit™ 数学挑战赛由 Cuemath 主办，与华夏纽约中心中文学校合作。',
     coverAlt: '孩子们在 MathFit 挑战赛上展示完成的分数披萨',
-    formTitle: '为孩子预留名额', step: (i, n) => '第 ' + i + ' 步，共 ' + n + ' 步',
+    formTitle: '为孩子报名', step: (i, n) => '第 ' + i + ' 步，共 ' + n + ' 步',
     fParent: '家长或监护人姓名', fEmail: '电子邮箱', fPhone: '电话', optional: '（选填）',
     fChild: '孩子姓名', fGrade: '孩子年级', choose: '请选择',
-    fKids: '几个孩子参加？每个孩子占一个名额。',
+    fKids: '几个孩子参加？',
     fOthers: '其他孩子的姓名和年级',
     fPrefLang: '活动通知语言',
     fTerms: '我同意', termsLink: '条款与条件',
     fConsent: '我同意 Cuemath 根据隐私政策，为质量、培训、安全、支持和服务改进的目的，对活动进行录制、拍照，以及拍摄我孩子的视频。',
-    submit: '预留名额', sending: '正在保存……',
-    saved: c => '已为 ' + c + ' 预留名额。',
+    submit: '提交报名', sending: '正在提交……',
+    saved: c => c + ' 已报名成功。',
     step2Intro: '以下三个选填问题可以帮助我们安排活动，也可以跳过。',
     fCurrent: '孩子目前是 Cuemath 学生吗？', yes: '是', no: '否',
     fSource: '您是从哪里得知这次活动的？',
@@ -594,10 +602,11 @@ const T = {
     skip: '跳过', save2: '完成',
     errRequired: '请填写必填项，并勾选两个同意框。',
     errEmail: '请检查电子邮箱地址。',
-    errFull: '抱歉，剩余名额不够这么多孩子。',
+    errFull: '抱歉，报名已截止。',
+    notLive: '报名尚未开放，本次信息未保存。请稍后再来，或发邮件给任意一位主持人。',
     errNet: '报名未能保存，请重试，或发邮件给任意一位主持人。',
     doneTitle: '报名成功！',
-    doneText: (c, d) => '已为 ' + c + ' 预留 ' + d + ' 的名额。确认邮件已发送到您的邮箱。邀请其他家庭一起来，孩子在现场就有好朋友了。',
+    doneText: (c, d) => c + ' 已报名 ' + d + ' 的活动。确认邮件已发送到您的邮箱。邀请其他家庭一起来，孩子在现场就有好朋友了。',
     fruits: ['香蕉', '黄色', '梨', '绿色', '苹果'],
     persona: [
       ['/', 'LINEAR', '一项突出的优势，而且稳定可靠。'],
@@ -615,7 +624,7 @@ const qs = new URLSearchParams(location.search);
 const ua = navigator.userAgent || '';
 const wantsZh = qs.get('lang') === 'zh' || /MicroMessenger/i.test(ua) || (!qs.get('lang') && (navigator.language || '').toLowerCase().startsWith('zh'));
 let lang = (EVENT.SHOW_CHINESE && qs.get('lang') !== 'en' && wantsZh) ? 'zh' : 'en';
-let seatsLeft = null, taken = null, band = 'k1', qi = 0, regId = '', childName = '';
+let families = 0, band = 'k1', qi = 0, regId = '', childName = '';
 const tx = k => (T[lang][k] != null ? T[lang][k] : T.en[k]);
 
 const [Y, M, D] = EVENT.date.split('-').map(Number);
@@ -779,17 +788,11 @@ function render() {
 
 function renderSeats() {
   const btns = [$('openReg'), $('stickyBtn')];
-  $('stickySeats').textContent = tx('stickySeats')(seatsLeft);
-  if (!EVENT.REGISTER_URL) {
-    btns.forEach(b => { b.disabled = true; }); $('openReg').textContent = tx('soon'); $('stickyBtn').textContent = tx('soon'); $('meter').hidden = true; return;
-  }
+  $('stickySeats').textContent = tx('stickySeats');
   btns.forEach(b => { b.disabled = false; }); $('openReg').textContent = tx('registerBtn'); $('stickyBtn').textContent = tx('registerShort');
-  if (seatsLeft === null) return;
+  if (!families) { $('meter').hidden = true; return; }
   $('meter').hidden = false;
-  $('meterText').textContent = tx('seatsTaken')(taken, EVENT.capacity);
-  $('meterLeft').textContent = tx('seatsLeft')(seatsLeft);
-  $('meterFill').style.width = Math.min(100, Math.round(taken / EVENT.capacity * 100)) + '%';
-  if (seatsLeft <= 0) { btns.forEach(b => { b.disabled = true; }); $('openReg').textContent = tx('full'); $('stickyBtn').textContent = tx('full'); }
+  $('meterText').textContent = tx('famCount')(families);
 }
 
 async function loadSeats() {
@@ -797,8 +800,8 @@ async function loadSeats() {
   try {
     const r = await fetch(EVENT.REGISTER_URL, { method: 'GET' });
     const j = await r.json();
-    if (j && j.ok) { seatsLeft = j.left; taken = j.taken; renderSeats(); }
-  } catch (e) { /* the meter stays hidden; registration still works */ }
+    if (j && j.ok) { families = j.families; renderSeats(); }
+  } catch (e) { /* the count stays hidden; registration still works */ }
 }
 
 if (EVENT.SHOW_CHINESE) {
@@ -828,7 +831,6 @@ $('invite').addEventListener('click', invite); $('invite2').addEventListener('cl
 
 const dlg = $('dlg');
 function openReg() {
-  if (!EVENT.REGISTER_URL || (seatsLeft !== null && seatsLeft <= 0)) { $('regCard').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
   $('step1').hidden = false; $('step2').hidden = true; $('done').style.display = 'none';
   $('stepLabel').textContent = tx('step')(1, 2);
   if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
@@ -858,11 +860,12 @@ $('step1').addEventListener('submit', async e => {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) return showErr(tx('errEmail'));
   regId = regId || (Date.now().toString(36) + Math.random().toString(36).slice(2, 8));
   data.regId = regId;
+  if (!EVENT.REGISTER_URL) return showErr(tx('notLive'));
   const btn = $('submit1'); btn.disabled = true; btn.textContent = tx('sending'); $('msg1').className = 'msg';
   const j = await post(data);
   btn.disabled = false; btn.textContent = tx('submit');
   if (!j.ok) return showErr(j.error === 'full' ? tx('errFull') : tx('errNet'));
-  if (typeof j.left === 'number') { seatsLeft = j.left; taken = EVENT.capacity - j.left; }
+  families = (families || 0) + 1;
   childName = data.childName; renderSeats();
   $('step1').hidden = true; $('step2').hidden = false; $('stepLabel').textContent = tx('step')(2, 2);
   $('savedText').textContent = tx('saved')(childName);
