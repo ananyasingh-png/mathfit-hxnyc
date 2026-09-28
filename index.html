@@ -133,6 +133,10 @@
   .faq p { margin: 8px 0 0; color: var(--muted); }
   .older { background: var(--card); border: 1px solid var(--line); border-left: 4px solid var(--yellow); border-radius: 12px; padding: 16px; }
   .older p { margin: 0 0 8px; } .older a { font-weight: 700; }
+  .side-older { margin-top: 24px; padding: 16px; }
+  .side-older .oh { display: block; font-size: 16px; line-height: 1.35; margin-bottom: 6px; }
+  .side-older p { font-size: 14px; color: var(--muted); margin: 0 0 12px; }
+  .side-older .btn { font-size: 14px; padding: 10px 14px; }
   .map { width: 100%; height: 240px; border: 0; border-radius: 14px; margin-top: 12px; background: var(--chip); }
   footer { margin-top: 56px; color: var(--muted); font-size: 14px; }
   .sticky { position: fixed; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); display: none; align-items: center; gap: 12px; z-index: 5; box-shadow: 0 -6px 20px rgba(0,0,0,.08); }
@@ -189,6 +193,11 @@
       <div class="side-only">
         <div class="label" data-i18n="hostedBy"></div>
         <div class="hosts" id="hostsSide"></div>
+        <div class="older side-older">
+          <b class="oh" data-i18n="hOlder"></b>
+          <p data-i18n="older"></p>
+          <a class="evalLink btn primary" href="#" target="_blank" rel="noopener" data-i18n="olderBtn"></a>
+        </div>
       </div>
     </aside>
 
@@ -231,17 +240,13 @@
       <div class="main-only">
         <div class="label" data-i18n="hostedBy"></div>
         <div class="hosts" id="hostsMain"></div>
+        <div class="older side-older">
+          <b class="oh" data-i18n="hOlder"></b>
+          <p data-i18n="older"></p>
+          <a class="evalLink btn primary" href="#" target="_blank" rel="noopener" data-i18n="olderBtn"></a>
+        </div>
       </div>
 
-      <section>
-        <h2 data-i18n="howTitle"></h2>
-        <ol class="steps">
-          <li><div class="when" id="tMeet"></div><div><b data-i18n="st1"></b><span data-i18n="st1d"></span></div></li>
-          <li><div class="when" id="tStart"></div><div><b data-i18n="st2"></b><span data-i18n="st2d"></span></div></li>
-          <li><div class="when" id="tEnd"></div><div><b data-i18n="st3"></b><span data-i18n="st3d"></span></div></li>
-          <li><div class="when" data-i18n="afterW"></div><div><b data-i18n="st4"></b><span data-i18n="st4d"></span></div></li>
-        </ol>
-      </section>
 
       <section class="body">
         <h2 data-i18n="about"></h2>
@@ -282,14 +287,7 @@
           <li data-i18n="g1"></li><li data-i18n="g2"></li><li data-i18n="g3"></li>
         </ul>
 
-        <h3 data-i18n="hFaq"></h3>
-        <div class="faq" id="faq"></div>
 
-        <h3 data-i18n="hOlder"></h3>
-        <div class="older">
-          <p data-i18n="older"></p>
-          <a id="evalLink" href="#" target="_blank" rel="noopener" data-i18n="olderBtn"></a>
-        </div>
       </section>
 
       <section>
@@ -769,12 +767,12 @@ function render() {
   $('timeNote').textContent = EVENT.timeNote ? tx('timeNoteTxt') : '';
   $('venue').textContent = $('venue2').textContent = EVENT.venue;
   $('address').textContent = $('address2').textContent = EVENT.address;
-  $('evalLink').href = EVENT.evalLink;
+  document.querySelectorAll('.evalLink').forEach(a => { a.href = EVENT.evalLink; });
   $('gcal').href = $('gcal2').href = calLink();
   $('countdown').textContent = tx('countdown')(daysLeft());
   $('stickyDate').textContent = shortDate() + ' · HXNYC';
   renderHosts($('hostsSide')); renderHosts($('hostsMain'));
-  renderTimes(); renderBand(); renderQuiz(); renderFlips(); renderFaq();
+  renderBand(); renderQuiz(); renderFlips();
   document.querySelectorAll('#langSwitch button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
   renderSeats();
 }
